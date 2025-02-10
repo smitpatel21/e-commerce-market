@@ -4,7 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./db";
 import Credentials from "next-auth/providers/credentials";
 import { encryptPassword } from "./util";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -25,25 +25,23 @@ export const authOptions: NextAuthOptions = {
                 },
             },
             authorize: async (credentials) => {
-                if (!credentials || !credentials.email || !credentials.password) {
-                    return null;
+                const { email, password } = credentials!;
+
+                const user = await prisma.user.findUnique({ where: { email } });
+                if (!user) {
+                    throw new Error("No user found with this email");
                 }
-                try {
-                    const email = credentials.email;
-                    const hash = encryptPassword(credentials.password);
-                    let user = await prisma.user.findUnique({ where: { email } });
-                    if (!user) {
-                        user = await prisma.user.create({
-                            data: {
-                                email,
-                                name,
-                                hashedPassword:hash
-                            },
-                        });
-                    } else {
-                        const isMatch = bcrypt.compareSync(credentials.password,user.hashedPassword as string)
-                    }
-                } catch (error) {}
+
+                const isValid = bcrypt.compareSync(
+                    password,
+                    user.hashedPassword
+                );
+
+                if (!isValid) {
+                    throw new Error("Invalid email or password");
+                }
+
+                return user;
             },
         }),
     ],
@@ -63,9 +61,9 @@ export const authOptions: NextAuthOptions = {
             return session;
         },
         redirect() {
-            return '/'
-          },
-    }
+            return "/";
+        },
+    },
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
