@@ -46,6 +46,8 @@ model User {
   updatedAt      DateTime  @updatedAt
   Session        Session[]
   Account        Account[]
+  Order          Order[]
+  Store          Store[]
 }
 
 model Session {
@@ -65,4 +67,75 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Category {
+  slug     String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  products Product[]
+}
+
+model Product {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  slug        String
+  description String?
+  price       Float
+  images      Json
+  storeId     String
+  Store       Store       @relation(fields: [storeId], references: [id])
+  categoryId  String
+  Category    Category    @relation(fields: [categoryId], references: [slug])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+
+  @@index([storeId, categoryId, name, slug])
+}
+
+model Store {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  userId      String
+  User        User        @relation(fields: [userId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  Product     Product[]
+  OrderItem   OrderItem[]
+
+  @@index([userId])
+}
+
+model Order {
+  id         String             @id @default(auto()) @map("_id") @db.ObjectId
+  totalPrice Float
+  token      String
+  status     TRANSACTION_STATUS
+  userId     String
+  User       User               @relation(fields: [userId], references: [id])
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  orderItems OrderItem[]
+
+  @@index([userId])
+}
+
+model OrderItem {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  storeId   String
+  store     Store   @relation(fields: [storeId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+enum TRANSACTION_STATUS {
+  PENDING
+  PAID
+  CANCELED
 }

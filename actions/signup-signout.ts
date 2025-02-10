@@ -1,5 +1,6 @@
 "use server";
 
+import { signIn } from "@/lib/auth";
 import { signInSchema } from "@/lib/validators/signup-signout-schema";
 
 const signup = (formData: FormData) => {
@@ -9,6 +10,8 @@ const signup = (formData: FormData) => {
         password: formData.get("password"),
     });
     // console.log(validatedFields?.error);
+
+    signIn("Credentials",validatedFields)
 };
 
 export { signup };

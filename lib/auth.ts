@@ -3,12 +3,8 @@ import NextAuth, { getServerSession, NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./db";
 import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
-
-type ICredentials = {
-    email: string;
-    password: string;
-};
+import { encryptPassword } from "./util";
+import bcrypt from 'bcryptjs';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -29,23 +25,25 @@ export const authOptions: NextAuthOptions = {
                 },
             },
             authorize: async (credentials) => {
-                const { email, password } = credentials!;
-
-                const user = await prisma.user.findUnique({ where: { email } });
-                if (!user) {
-                    throw new Error("No user found with this email");
+                if (!credentials || !credentials.email || !credentials.password) {
+                    return null;
                 }
-
-                const isValid = bcrypt.compareSync(
-                    password,
-                    user.hashedPassword
-                );
-
-                if (!isValid) {
-                    throw new Error("Invalid email or password");
-                }
-
-                return user;
+                try {
+                    const email = credentials.email;
+                    const hash = encryptPassword(credentials.password);
+                    let user = await prisma.user.findUnique({ where: { email } });
+                    if (!user) {
+                        user = await prisma.user.create({
+                            data: {
+                                email,
+                                name,
+                                hashedPassword:hash
+                            },
+                        });
+                    } else {
+                        const isMatch = bcrypt.compareSync(credentials.password,user.hashedPassword as string)
+                    }
+                } catch (error) {}
             },
         }),
     ],
