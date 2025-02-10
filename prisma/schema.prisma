@@ -41,7 +41,7 @@ model User {
   email          String    @unique
   emailVerified  String?
   image          String?
-  hashedPassword String?
+  hashedPassword String
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   Session        Session[]
