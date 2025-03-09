@@ -1,10 +1,10 @@
 // ref: https://authjs.dev/getting-started/adapters/prisma
-import NextAuth, { getServerSession, NextAuthOptions } from "next-auth";
+import NextAuth, {  NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./db";
 import Credentials from "next-auth/providers/credentials";
 import { encryptPassword } from "./util";
-import bcrypt from "bcryptjs";
+import bcrypt from 'bcryptjs';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -25,23 +25,28 @@ export const authOptions: NextAuthOptions = {
                 },
             },
             authorize: async (credentials) => {
-                const { email, password } = credentials!;
-
-                const user = await prisma.user.findUnique({ where: { email } });
-                if (!user) {
-                    throw new Error("No user found with this email");
+                if (!credentials || !credentials.email || !credentials.password) {
+                    return null
                 }
+                try {
+                    const email = credentials.email;                    
+                    const hash = encryptPassword(credentials.password);
 
-                const isValid = bcrypt.compareSync(
-                    password,
-                    user.hashedPassword
-                );
-
-                if (!isValid) {
-                    throw new Error("Invalid email or password");
+                    
+                    let user = await prisma.user.findUnique({ where: { email } });
+                    if(!user){
+                        throw new Error("user doesnot exist!")
+                    }
+                    const isMatch = bcrypt.compareSync(credentials.password,user.hashedPassword as string)
+                    if(isMatch){
+                        return user;
+                    } else {
+                        throw new Error("invalid credentials")
+                    }
+                    
+                } catch (error:unknown) {
+                    throw new Error("server error");
                 }
-
-                return user;
             },
         }),
     ],
@@ -61,11 +66,10 @@ export const authOptions: NextAuthOptions = {
             return session;
         },
         redirect() {
-            return "/";
-        },
-    },
+            return '/'
+          },
+    }
 };
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
 // Below is older method to get the session we use auth() now for that
-export const getAuthSession = auth();

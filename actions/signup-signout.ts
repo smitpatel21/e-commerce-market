@@ -1,17 +1,19 @@
 "use server";
 
-import { signIn } from "@/lib/auth";
-import { signInSchema } from "@/lib/validators/signup-signout-schema";
+import { signUpSchema } from "@/lib/validators/signup-signout-schema";
 
 const signup = (formData: FormData) => {
-    const validatedFields = signInSchema.safeParse({
-        name: formData.get("name"),
-        email: formData.get("email"),
-        password: formData.get("password"),
-    });
-    // console.log(validatedFields?.error);
+  const name = formData.get("name") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
-    signIn("Credentials",validatedFields)
+  fetch("http://localhost:3000/api/auth/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name, email, password }),
+  });
 };
 
 export { signup };
