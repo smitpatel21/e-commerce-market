@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export default function layout({ children }: React.PropsWithChildren) {
     const session = useSession();
+    console.log(session,'$$$$$$$$$$$$$$$')
     return (
         <div className="grid min-h-screen grid-cols-1 overflow-hidden md:grid-cols-3 lg:grid-cols-2">
             <AspectRatio ratio={16 / 9}>
