@@ -28,8 +28,7 @@ export const authOptions:NextAuthOptions = {
                 try {
                     const email = credentials.email;                    
                     const hash = encryptPassword(credentials.password);
-
-                    
+  
                     let user = await prisma.user.findUnique({ where: { email } });
 
                     if(!user){

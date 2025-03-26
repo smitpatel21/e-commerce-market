@@ -3,6 +3,7 @@ import { FC } from "react";
 import { buttonVariants } from "../ui/Button";
 import CartButton from "../cart/CartButton";
 import UserAccountNav from "../auth/UserAccountNav";
+import SearchButton from "./SearchButton";
 
 interface NavbarProps {
     user?: {};
@@ -14,6 +15,7 @@ const Navbar: FC<NavbarProps> = ({ user }) => {
             <nav className="container px-2 sm:px-4 lg:px-6 flex items-center justify-between">
                 NavBar
                 <div className="flex items-center gap-x-2">
+                    <SearchButton/>
                     <CartButton />
                     {user ? (
                         <UserAccountNav user={user} />
