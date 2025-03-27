@@ -1,7 +1,6 @@
 import { ArrowRight, ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Suspense } from 'react'
-
 import PopularProducts from '@/components/PopularProduct'
 import PopularProductsSkeleton from '@/components/skeletons/PopularProductsSkeleton'
 import { buttonVariants } from '@/components/ui/Button'

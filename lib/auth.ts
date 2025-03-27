@@ -72,4 +72,4 @@ export const authOptions:NextAuthOptions = {
 };
 
 export const handlers = NextAuth(authOptions);
-// Below is older method to get the session we use auth() now for that
+
