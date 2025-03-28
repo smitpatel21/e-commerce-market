@@ -27,7 +27,7 @@ const Banner = () => {
                         Buy and sell skateboarding gears from independent brands
                         and stores around the world with ease
                     </h2>
-                    <div className="">
+                    <div className="flex items-center justify-center gap-x-4 sm:justify-start">
                         <a className={cn(buttonVariants())} href="/products">
                             Buy now
                         </a>
