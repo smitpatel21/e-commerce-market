@@ -6,8 +6,8 @@ export default function HomePage (){
     return <main>
         <Banner/>
         <div className='max-w-7xl mx-auto'>
-        <Categories />
-        <Products />
-      </div>
+          <Categories />
+          <Products />
+        </div>
     </main>
 }
