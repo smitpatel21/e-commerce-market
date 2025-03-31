@@ -1,4 +1,5 @@
 "use client"
+import Footer from "@/components/layouts/Footer";
 import Navbar from "@/components/layouts/Navbar";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
@@ -13,6 +14,7 @@ export default function HomePageLayout({ children }: {  children: React.ReactNod
     // }
     return <div>
         <Navbar user={session.data?.user} />
-        {children}
+            {children}
+        <Footer/>
     </div>
 }

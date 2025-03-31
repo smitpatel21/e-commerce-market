@@ -1,18 +1,12 @@
 'use client'
-
 import { ShoppingCart } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
-
 import { Button } from "@/components/ui/Button"
-
 
 const CartButton = () => {
   const [isMounted, setIsMounted] = useState<boolean>(false)
-
   const router = useRouter()
-  
-
   useEffect(() => {
     setIsMounted(true)
   }, [])
