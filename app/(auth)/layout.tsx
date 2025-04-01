@@ -3,10 +3,13 @@ import AspectRatio from "@/components/ui/AspectRatio";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function layout({ children }: React.PropsWithChildren) {
     const session = useSession();
-    console.log(session,'$$$$$$$$$$$$$$$')
+    if(session.data){
+        redirect('/')
+    }
     return (
         <div className="grid min-h-screen grid-cols-1 overflow-hidden md:grid-cols-3 lg:grid-cols-2">
             <AspectRatio ratio={16 / 9}>

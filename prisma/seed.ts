@@ -25,15 +25,12 @@ async function main() {
       slug: 'accessories',
     },
   })
-
-  console.log({ skateboards, clothing, shoes, accessories })
 }
 main()
   .then(async () => {
     await prisma.$disconnect()
   })
   .catch(async (e) => {
-    console.error(e)
     await prisma.$disconnect()
     process.exit(1)
   })

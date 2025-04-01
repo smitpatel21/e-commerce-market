@@ -1,5 +1,20 @@
+"use client";
 import { signup } from "@/actions/signup-signout";
 import { buttonVariants } from "@/components/ui/Button";
+import {
+    FormControl,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/Form";
+import { Input } from "@/components/ui/Input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/Select";
 
 export default function SignupPage() {
     // const [state, action] = useFormState(signup, { name: "", email: "", password: "", confirmPassword: "" });
@@ -8,39 +23,43 @@ export default function SignupPage() {
             <form className="flex flex-col gap-4" action={signup}>
                 <label>
                     Name
-                    <input
-                        type="text"
-                        name="name"
-                        className="focus:outline-none box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
-                    />
+                    <Input type="text" name="name" />
                 </label>
                 <label>
                     Email
-                    <input
-                        type="email"
-                        name="email"
-                        className="focus:outline-none box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
-                    />
+                    <Input type="email" name="email" />
                 </label>
                 <label>
                     Password
-                    <input
-                        type="password"
-                        name="password"
-                        className="focus:outline-none box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
-                    />
+                    <Input type="password" name="password" />
                 </label>
                 <label>
                     Confirm Password
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        className="focus:outline-none box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
-                    />
+                    <Input type="password" name="confirmPassword" />
                 </label>
-                <button className={buttonVariants({ variant: "default" })} type="submit">
-                    {" "}
-                    Sign up{" "}
+                <label>
+                    Role
+                    <Select
+                    //   value={field.value}
+                    //   onValueChange={(value: typeof field.value) =>
+                    //     field.onChange(value)
+                    //   }
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select a role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="skateboards">Seller</SelectItem>
+                            <SelectItem value="clothing">Buyer</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </label>
+
+                <button
+                    className={buttonVariants({ variant: "default" })}
+                    type="submit"
+                >
+                    Sign up
                 </button>
             </form>
         </div>

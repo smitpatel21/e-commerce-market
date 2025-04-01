@@ -6,8 +6,8 @@ const OrdersPage = async ({
 }: {
   searchParams: { status: 'PENDING' | 'PAID' | 'CANCELED' }
 }) => {
-  let orders
-  let ordersCount
+  let orders = []
+  let ordersCount = 0
 
   return (
     <div className='py-4 px-1 space-y-6'>
