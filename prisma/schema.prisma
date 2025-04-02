@@ -81,7 +81,7 @@ model Product {
   slug        String
   description String?
   price       Float
-  images      Json
+  images      Json?
   storeId     String      @db.ObjectId
   Store       Store       @relation(fields: [storeId], references: [id])
   categoryId  String      @db.ObjectId
