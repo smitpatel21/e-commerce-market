@@ -13,7 +13,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu'
-
 import { ProductColumn } from './columns'
 import { AlertModal } from '@/components/modals/AlertModal'
 
