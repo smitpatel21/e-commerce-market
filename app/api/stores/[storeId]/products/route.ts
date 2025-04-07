@@ -8,9 +8,10 @@ import { getServerSession } from 'next-auth'
 
 export async function POST(
   req: Request,
-  { params }: { params: { storeId: string } },
+  { params }: { params: Promise<{ storeId: string }> },
 ) {
   try {
+    const paramsAwaited = await params;
     const session = await getServerSession(authOptions)
 
     if (!session?.user) {
@@ -29,7 +30,7 @@ export async function POST(
     const isProductExist = await prisma.product.findFirst({
       where: {
         slug,
-        storeId: params.storeId,
+        storeId: paramsAwaited.storeId,
       },
     })
 
@@ -48,7 +49,7 @@ export async function POST(
         description,
         slug,
         categoryId: category,
-        storeId: params.storeId,
+        storeId: paramsAwaited.storeId,
         price,
         // images,
       },

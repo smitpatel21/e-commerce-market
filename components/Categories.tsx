@@ -3,10 +3,11 @@ import { Suspense } from 'react'
 
 import CategoryCard from '@/components/cards/CategoryCard'
 import CategoryCardSkeleton from '@/components/skeletons/CategoryCardSkeleton'
+import prisma from '@/lib/db'
 // import { categories } from '@/config'
 
 const Categories = async () => {
-  const categories = [{slug:'1',name:'Box'}]
+  const categories = await prisma.category.findMany();
   return (
     <section
       id='categories'
@@ -31,7 +32,7 @@ const Categories = async () => {
       </div>
       <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
         {categories.map((category) => (
-          <Suspense key={category.slug} fallback={<CategoryCardSkeleton />}>
+          <Suspense key={category.id} fallback={<CategoryCardSkeleton />}>
             <CategoryCard category={category} />
           </Suspense>
         ))}

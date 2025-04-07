@@ -70,7 +70,7 @@ model VerificationToken {
 }
 
 model Category {
-  slug     String    @id @default(auto()) @map("_id") @db.ObjectId
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   products Product[]
 }
@@ -85,7 +85,7 @@ model Product {
   storeId     String      @db.ObjectId
   Store       Store       @relation(fields: [storeId], references: [id])
   categoryId  String      @db.ObjectId
-  Category    Category    @relation(fields: [categoryId], references: [slug])
+  Category    Category    @relation(fields: [categoryId], references: [id])
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   orderItems  OrderItem[]

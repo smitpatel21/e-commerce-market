@@ -3,26 +3,22 @@ import prisma from "@/lib/db"
 async function main() {
   const skateboards = await prisma.category.create({
     data: {
-      name: 'Skateboards',
-      slug: 'skateboards',
+      name: 'Skateboards'
     },
   })
   const clothing = await prisma.category.create({
     data: {
-      name: 'Clothing',
-      slug: 'clothing',
+      name: 'Clothing'
     },
   })
   const shoes = await prisma.category.create({
     data: {
-      name: 'Shoes',
-      slug: 'shoes',
+      name: 'Shoes'
     },
   })
   const accessories = await prisma.category.create({
     data: {
-      name: 'Accessories',
-      slug: 'accessories',
+      name: 'Accessories'
     },
   })
 }

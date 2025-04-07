@@ -1,6 +1,6 @@
 import Banner from "@/components/ui/Banner";
-import Categories from "@/components/ui/Categories";
-import Products from "@/components/ui/Products";
+import Categories from "@/components/Categories";
+import Products from "@/components/Products";
 
 export default function HomePage (){
     return <main>
