@@ -16,7 +16,7 @@ const NewProductPage = async ({
     params: Promise<{ storeId: string; productId: string }>;
 }) => {
     const awaitedParams = await params;
-    console.log(awaitedParams)
+    
     const product = await prisma.product.findUnique({
         where: {
             id: awaitedParams.productId,

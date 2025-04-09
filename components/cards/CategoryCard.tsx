@@ -18,11 +18,11 @@ interface CategoryCardProps {
 const CategoryCard: React.FC<CategoryCardProps> = async ({ category }) => {
 
   return (
-    <Link href={`/products?category=${category.slug}`}>
+    <Link href={`/products?category=${category.id}`}>
       <Card className='relative h-full w-full overflow-hidden rounded-lg bg-transparent transition-colors group hover:bg-emerald-600'>
         <CardHeader>
           <Image
-            src={`/svg/${category.slug}.svg`}
+            src={`/svg/${category.id}.svg`}
             alt='test'
             width={32}
             height={32}

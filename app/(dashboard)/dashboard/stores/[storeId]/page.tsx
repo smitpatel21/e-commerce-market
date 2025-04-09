@@ -7,11 +7,12 @@ import { columns, ProductColumn } from './components/columns'
 export default async function ProductsPage({
   params,
 }: {
-  params: { storeId: string }
+  params: Promise<{ storeId: string }>
 }) {
+  const awaitedParams = await params;
   const data = await prisma.product.findMany({
     where: {
-      storeId: params.storeId,
+      storeId: awaitedParams.storeId,
     },
     include: {
       Category: true,

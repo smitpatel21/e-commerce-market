@@ -14,17 +14,16 @@ export async function POST(req: Request) {
 
         const body = await req.json();
         const { name, description } = storeSchema.parse(body);
-        // const slug = slugify(name, { lower: true });
 
-        // const isStoreExist = await prisma.store.findUnique({
-        //     where: {
-        //         id: slug,
-        //     },
-        // });
+        const isStoreExist = await prisma.store.findFirst({
+            where: {
+                name: name,
+            },
+        });
 
-        // if (isStoreExist) {
-        //     return new Response("Store name is already exist", { status: 409 });
-        // }
+        if (isStoreExist) {
+            return new Response("Store name is already exist", { status: 409 });
+        }
 
         const user = await prisma.store.create({
             data: {
@@ -32,7 +31,7 @@ export async function POST(req: Request) {
                 description,
                 userId: session.user.id,
             },
-        },);
+        });
 
         return new Response("OK");
     } catch (error) {
@@ -40,7 +39,7 @@ export async function POST(req: Request) {
             return new Response("Invalid request data passed", { status: 422 });
         }
 
-        console.log(error)
+        console.log(error);
         return new Response("Could not create store, please try again later.", {
             status: 500,
         });

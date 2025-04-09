@@ -29,7 +29,7 @@ const Info: React.FC<InfoProps> = ({ product }) => {
       <div className='mt-3 flex items-end justify-between'>
         <h2 className='text-2xl font-medium text-gray-900'>
           {/* @ts-ignore */}
-          45
+          Rs. {product.price}
         </h2>
       </div>
         <p className='my-2 text-muted-foreground'>

@@ -7,7 +7,6 @@ import React from "react";
 
 export default function HomePageLayout({ children }: {  children: React.ReactNode }) {
     const session = useSession()
-    
 
     // if (!session?.data) {
     //   redirect('/sign-in')

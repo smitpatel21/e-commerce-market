@@ -38,7 +38,7 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
         <div className='relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0'>
           <div className='flex justify-between'>
             <Link
-              href={`/${data.storeId}/${data.slug}?productId=${data.id}`}
+              href={`/${data.storeId}/product/${data.id}`}
               className='sm:text-lg font-semibold text-black line-clamp-2'
             >
               {data.name}
@@ -50,9 +50,6 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
               {data.categoryId}
             </p>
           </div>
-
-          
-          23
         </div>
       </div>
     </li>

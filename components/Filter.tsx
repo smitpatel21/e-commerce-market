@@ -50,13 +50,13 @@ const Filter: React.FC<FilterProps> = ({ categories, className, ...props }) => {
             <div className='flex flex-wrap gap-2'>
               {categories.map((category) => (
                 <div
-                  key={category.slug}
-                  onClick={() => changeCategory(category.slug)}
+                  key={category.id}
+                  onClick={() => changeCategory(category.id)}
                   className='flex items-center'
                 >
                   <Button
                     variant={
-                      selectedCategory === category.slug ? 'default' : 'outline'
+                      selectedCategory === category.id ? 'default' : 'outline'
                     }
                   >
                     {category.name}

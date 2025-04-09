@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import CategoryCard from '@/components/cards/CategoryCard'
 import CategoryCardSkeleton from '@/components/skeletons/CategoryCardSkeleton'
 import prisma from '@/lib/db'
-// import { categories } from '@/config'
+
 
 const Categories = async () => {
   const categories = await prisma.category.findMany();
